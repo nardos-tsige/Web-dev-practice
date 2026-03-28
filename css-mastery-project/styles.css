@@ -1,0 +1,180 @@
+* {
+    margin: 0/*removes defalut spacing around all elements*/;
+    padding: 0;/*removes defalut inner spacing from all elements*/
+    box-sizing: border-box; /*this makes wid/height include padding and border*/
+}
+
+body {
+    min-height: 100vh;/*minimum height equals 100% of viewport height - that actually means full screen*/
+
+    display: flex;/*it enables flexbox layout*/
+    justify-content: center; /*centers content horizontally*/
+    align-items: center;/*centers content vertically*/
+    background: #0a0a2a;/*dark navy bg color behind the banner or the main hero section of the the page*/
+    font-family: 'Arial', sans-serif;/*sets default font to arial, fallback to any sans-serif*/
+}
+
+.banner {
+    width: 1200px;/*fixed wid for large screens but -*/
+    max-width: 90%;/*but on smaller screens, shrink to 90% of parent width*/
+    height: 550px;/*height - fixed*/
+    border-radius: 20px;/*rounds cornens by 20 px*/
+    position: relative;/*allows absolute positioned child elements to position relative to this container*/
+    overflow: hidden;/*it hides anyth that spills outside the rounded corners*/
+    
+    background-image: 
+        /*dark gradient overlay for text readability */
+        linear-gradient(135deg, /*diagonal dxn - inculdes top to left TO bottom to right*/
+            rgba(0, 0, 0, 0.85) 0%,/*black wiz 85% opacity that's very dark*/
+            rgba(0, 0, 0, 0.6) 50%,
+            rgba(0, 0, 0, 0.85) 100%),
+        /*accent color gradient - tech blue/purple theme */
+        linear-gradient(45deg,
+            rgba(0, 150, 255, 0.25) 0%,
+            rgba(100, 0, 255, 0.25) 100%),
+        /*developer Background Image */
+        url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80');
+    
+    background-size: cover;/*scales img to cover entire container, may crop edges*/
+    background-position: center;/*centers the bg img*/
+    background-repeat: no-repeat;/*prevents img from repeating or kinda of tiling*/
+    
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;/*smooth interpolation between the original and new transform values - so the element smoothly grows from 100% to 110% over 0.3 seconds*/
+}
+
+.banner:hover {
+    transform: scale(1.02);/*when the mouse cursor is over the banner - it enlarges by 2%*/
+}
+
+/*decorative border glow effect*/
+.banner::before {/*creates a pseudo-element that's virtual element bfr the banner's content appears*/
+    content: '';/*required for pseudo-element to appear*/
+    position: absolute;/*postions relative to the parent*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;/*covers the entire parent*/
+    border-radius: 20px;/*matches parent's rounded corners*/
+    padding: 2px;/*creates space for the border*/
+    background: linear-gradient(135deg, 
+        rgba(0, 150, 255, 0.5), 
+        rgba(100, 0, 255, 0.5));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;/*mask cuts the center, leaving only the border*/
+    pointer-events: none;/*allows clicking through the border to the content*/
+}
+
+/*banner content overlay*/
+.banner-content {
+    position: relative;/*establishes stacking content*/
+    height: 100%;/*takes full height of parent banner*/
+    display: flex;/*enables flexbox*/
+    flex-direction: column;/*stacks children vertically*/
+    justify-content: center;/*centers vertically*/
+    padding: 50px;/*inner spacing from edges*/
+    color: white;/*text color*/
+    z-index: 2;/*places content above bg layers*/
+}
+
+.title {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: #00ffff;
+    font-weight: 600;
+}
+
+.main-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.description {
+    font-size: 1rem;
+    max-width: 500px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    color: #cccccc;
+}
+
+/*Read More button*/
+.read-more {
+    display: inline-block;
+    padding: 12px 35px;
+    background: linear-gradient(135deg, #00aaff, #0066ff);/*removes underline from link*/
+    color: white;
+    text-decoration: none;/*removes underline from link*/
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;/*changes cursor to hand on hover*/
+    font-size: 1rem;
+    text-align: center;
+    width: fit-content;/*width adjusts to content size*/
+}
+
+.read-more:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 100, 255, 0.3);
+    background: linear-gradient(135deg, #00bbff, #0077ff);
+}
+
+/* Optional: Add a subtle animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}/*@keyframes - defines animation sequence, from - Starting state (invisible, 30px down), to - ending state (fully visible, original position*/
+
+.banner-content > * {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.title { animation-delay: 0.1s; opacity: 0; }
+.main-title { animation-delay: 0.2s; opacity: 0; }
+.subtitle { animation-delay: 0.3s; opacity: 0; }
+.description { animation-delay: 0.4s; opacity: 0; }
+.read-more { animation-delay: 0.5s; opacity: 0; }
+
+/* Responsive Design - applies styles when screen width is 768px or less */
+@media (max-width: 768px) {
+    .banner {
+        height: 500px;
+    }
+    
+    .banner-content {
+        padding: 30px;
+    }
+    
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .description {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+}
